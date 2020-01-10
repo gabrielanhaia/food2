@@ -5,13 +5,13 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateFormTable
+ * Class CreateFormsTable
  *
  * Migration responsible for creating the table "form"
  *
  * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
  */
-class CreateFormTable extends Migration
+class CreateFormsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -20,7 +20,7 @@ class CreateFormTable extends Migration
      */
     public function up()
     {
-        Schema::create('form', function (Blueprint $table) {
+        Schema::create('forms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->nullable(false);
             $table->string('name', 256)->unique();
@@ -29,7 +29,14 @@ class CreateFormTable extends Migration
             $table->dateTime('start_publish');
             $table->dateTime('end_publish');
             $table->timestamps();
-            $table->softDeletes()->index('index_users_deleted_at');
+            $table->softDeletes()->index('index_forms_deleted_at');
+        });
+
+        Schema::table('forms', function (Blueprint $table) {
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onUpdate('NO ACTION')
+                ->onDelete('NO ACTION');
         });
     }
 
@@ -40,6 +47,6 @@ class CreateFormTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form');
+        Schema::dropIfExists('forms');
     }
 }
