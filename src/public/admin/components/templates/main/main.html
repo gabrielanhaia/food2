@@ -1,0 +1,49 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <!--<div ng-include="'components/templates/main/navigation.html'"></div>-->
+    <xpr-sidebar-menu></xpr-sidebar-menu>
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="gray-bg {{$state.current.name}}" ng-style="mainMinHeight()">
+
+        <!-- Page wrapper -->
+        <div ng-include="'components/templates/main/topnavbar.html'"></div>
+
+        <!-- Main view  -->
+        <div ui-view>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center m-t-lg">
+                            <h1>
+                                Welcome
+                            </h1>
+                            <small>
+                                This code, partially or complete, is not supposed to be used for any other purpose without<br>
+                                explicitly authorization of the original author.<br><br>
+                                This code was created in a way that it could be:<br>
+                                1 - Modular<br>
+                                2 - LazyLoaded<br>
+                                3 - With minimum code on the backend and frontend<br><br>
+                                Due to the short time to set everything working together, some parts are not 100%<br>
+                                optimized or organized. Still, it's possible to easily understand the general ideal<br>
+                                on the code organization.<br><br>
+
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'components/templates/main/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

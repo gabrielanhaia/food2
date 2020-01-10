@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+
+    <base href="/admin/">
+
+    <!-- CSS -->
+
+    <!-- Font awesome -->
+    <link href="../resources/vendor/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- Bootstrap and Fonts -->
+    <link href="../resources/vendor/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bower_components/bootstrap.ui/dist/css/bootstrap-ui.css"></link>
+    <!-- Main Inspinia CSS files -->
+    <link href="../resources/vendor/inspinia/css/animate.css" rel="stylesheet">
+    <link href="../resources/vendor/inspinia/css/style.css" rel="stylesheet">
+    <link href="../resources/vendor/datepicker/css/datepicker.css" rel="stylesheet">
+    <link href="../resources/vendor/toastr/toastr.min.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="../bower_components/angular-datatables/dist/css/angular-datatables.css" rel="stylesheet" >
+
+    <!-- Toastr -->
+
+    <!-- Application css -->
+    <link href="../resources/css/main.css" rel="stylesheet" >
+    <!-- /CSS -->
+
+    <!-- JS -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="../bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+    <script src="../bower_components/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="../bower_components/angular-datatables/dist/angular-datatables.js"></script>
+    <script src="../bower_components/system.js/dist/system.js"></script>
+    <script src="../bower_components/cr-acl/cr-acl.js"></script>
+
+    <!-- Main Inspinia JS files -->
+    <script src="../resources/vendor/maskedinput/maskedinput.js"></script>
+    <script src="../resources/vendor/datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="../resources/vendor/toastr/toastr.min.js"></script>
+
+    <script src="../resources/vendor/bootbox/bootbox.js"></script>
+
+    <!-- Resources used for configuration -->
+    <script src="config.js"></script>
+    <!-- Application js -->
+    <script src="app.js"></script>
+    <!-- /JS -->
+</head>
+
+<body ng-controller="app.appController">
+<div id="loading" class="loading" ng-show="loading">
+    <img src="../resources/images/squares.gif">
+</div>
+<ui-view></ui-view>
+</body>
+</html>

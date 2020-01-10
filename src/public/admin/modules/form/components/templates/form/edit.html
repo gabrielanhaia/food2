@@ -1,0 +1,157 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2 ng-if="!formData.id">New form</h2>
+        <h2 ng-if="formData.id">Edit form</h2>
+        <xpr-breadcrumb></xpr-breadcrumb>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <form method="get" class="form-horizontal">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <H5>{{ 'Form details' | xprTrans }}</h5>
+                <div class="ibox-tools">
+                    <button class="btn btn-danger " type="button" ng-click="cancel()">
+                        <i class="fa fa-close"></i> Discard changes
+                    </button>
+                    <button class="btn btn-primary " type="button" ng-click="save()">
+                        <i class="fa fa-check"></i> Save form
+                    </button>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" ng-model="formData.name" maxlength="256" class="form-control">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" ng-model="formData.description"></textarea>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Introduction</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" ng-model="formData.introduction"></textarea>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Start publishing</label>
+                    <div class="col-sm-3">
+
+                        <div class="input-group date">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                            <input type="text" class="form-control" ng-model="formData.start_date" xpr-date-picker>
+                        </div>
+
+                    </div>
+                    <label class="col-sm-2 control-label">End publishing</label>
+                    <div class="col-sm-3">
+                        <div class="input-group date">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                            <input type="text" class="form-control" ng-model="formData.end_date" xpr-date-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ibox float-e-margins" ng-repeat="(key, question) in formData.questions">
+            <div class="ibox-title">
+                <H5>{{ 'Question' | xprTrans }} #{{ key+1 }}</h5>
+                <div class="ibox-tools">
+                    <button class="btn btn-w-m btn-danger" ng-click="delQuestion(question)">
+                        <i class="fa fa-trash"></i> Remove question
+                    </button>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" ng-model="question.description"></textarea>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Question type</label>
+                    <div class="col-sm-3">
+                        <select ng-model="question.type" class="form-control"
+                                ng-options="capitalize(option) for option in questionTypes track by option">
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label">Mandatory</label>
+                    <div class="col-sm-3">
+                        <select ng-model="question.mandatory" class="form-control"
+                                ng-options="boolToStr(option) for option in booleanType track by option">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="question.type == 'radio' || question.type == 'dropdown'">
+                    <label class="col-sm-2 control-label">Possible Answers</label>
+                    <div class="col-sm-10 control-label" style="color: #FF0000 !important; text-align: left !important;" ng-show="question.answers.length == 0">
+                        <em>No possible answers registered yet. Click on "Add Answer" and set a valid value for the answer.</em>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="question.type == 'radio' || question.type == 'dropdown'" ng-repeat="(akey, answer) in question.answers">
+                    <label class="col-sm-2 control-label">Answer  #{{ akey+1 }}</label>
+                    <div class="col-sm-8">
+                        <input type="text" ng-model="answer.valid_value" maxlength="256" class="form-control">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-s-m btn-danger" ng-click="delAnswer(question, answer)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+
+                <div class="form-group" ng-show="question.type == 'radio' || question.type == 'dropdown'">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-2">
+                        <button class="btn btn-w-m btn-success" ng-click="addAnswer(question)">
+                            <i class="fa fa-plus"></i> Add answer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="ibox-tools">
+                    <button class="btn btn-success " type="button" ng-click="addQuestion()"><i class="fa fa-plus"></i> Add Question
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <div class="ibox-tools">
+                    <button class="btn btn-danger " type="button" ng-click="cancel()">
+                        <i class="fa fa-close"></i> Discard changes
+                    </button>
+                    <button class="btn btn-primary " type="button" ng-click="save()">
+                        <i class="fa fa-check"></i> Save form
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

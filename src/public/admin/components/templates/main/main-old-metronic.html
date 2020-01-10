@@ -1,0 +1,82 @@
+<!--HEADER-->
+<div class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid"
+     ng-class="{'page-sidebar-closed': pageSidebarClosed}"
+>
+    <!-- BEGIN HEADER -->
+    <div class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner ">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo" ng-click="toggleMenu()">
+                <img src="resources/images/logo.png" alt="Xpreso" style="margin:20px 20px" ng-show="!pageSidebarClosed"/>
+                <div class="menu-toggler sidebar-toggler"></div>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
+               data-target=".navbar-collapse"> </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN PAGE TOP -->
+            <div class="page-top">
+                <!-- BEGIN HEADER SEARCH BOX -->
+                <form class="search-form search-form-expanded" action="page_general_search_3.html" method="GET">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search..." name="query">
+                        <span class="input-group-btn">
+                                <a href="javascript:;" class="btn submit">
+                                    <i class="icon-magnifier"></i>
+                                </a>
+                            </span>
+                    </div>
+                </form>
+                <!-- END HEADER SEARCH BOX -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <xpr-user-menu></xpr-user-menu>
+                <!-- END TOP NAVIGATION MENU -->
+            </div>
+            <!-- END PAGE TOP -->
+        </div>
+        <!-- END HEADER INNER -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN HEADER & CONTENT DIVIDER -->
+    <div class="clearfix"></div>
+    <!-- END HEADER & CONTENT DIVIDER -->
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar-wrapper">
+            <div class="page-sidebar navbar-collapse collapse">
+                <!-- BEGIN SIDEBAR MENU -->
+                <xpr-sidebar-menu></xpr-sidebar-menu>
+                <!-- END SIDEBAR MENU -->
+            </div>
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <!-- BEGIN CONTENT BODY -->
+            <div class="page-content" ng-style="mainMinHeight()">
+                <xpr-breadcrumb></xpr-breadcrumb>
+                <ui-view>
+                    <!-- PAGE HEADER-->
+                    <h1 class="page-title"> {{ 'Angular Skeleton' | xprTrans }}
+                        <small>{{ 'Small explanation of what this is all about' | xprTrans }}</small>
+                    </h1>
+                    <!-- END PAGE HEADER-->
+                    <!-- PAGE module content-->
+                    <div class="col-lg-12">
+                    </div>
+                    <!-- END PAGE module content-->
+                </ui-view>
+            </div>
+            <!-- END CONTENT BODY -->
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer" style=" position: fixed; bottom: 0px; width: 100%;">
+        <div class="page-footer-inner"> 2017 &copy </div>
+    </div>
+</div>

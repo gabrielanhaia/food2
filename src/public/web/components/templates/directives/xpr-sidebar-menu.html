@@ -1,0 +1,26 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+
+                <div class="page-logo">
+                    <img src="resources/images/logo-small.png" alt="Xpreso" style="margin:0px 20px"
+                         ng-show="!pageSidebarClosed"/>
+                </div>
+                <div class="logo-element">
+                    AC+
+                </div>
+
+            </li>
+
+            <li ng-repeat="(key, item) in menu" ui-sref-active="active">
+                <a href="#!{{getStateUrl(item.state)}}">
+                    <i ng-if="item.icon" class="{{item.icon}}"></i>
+                    <span class="nav-lavel">{{item.name | xprTrans}}</span>
+                </a>
+                <xpr-sidebar-submenu menu="item.submenus"></xpr-sidebar-submenu>
+            </li>
+
+        </ul>
+    </div>
+</nav>

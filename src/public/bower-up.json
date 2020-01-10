@@ -1,0 +1,69 @@
+{
+  "name": "threadable-ux",
+  "authors": [
+    "Pablo Sanchez <pablo@threadable.io>"
+  ],
+  "description": "Threadable AngularJS Seed",
+  "main": "index.html",
+  "keywords": [
+    "Threadable",
+    "AngularJS",
+    "Seed"
+  ],
+  "license": "XPL",
+  "homepage": "http://threadable.io",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "3.3.7",
+    "jquery": "3.4.x",
+    "jquery-ui": "1.12.1",
+    "system.js": "0.21.0",
+    "oclazyload": "1.0.9",
+    "angular": "~1.7.x",
+    "angular-animate": "~1.7.x",
+    "angular-resource": "~1.7.x",
+    "angular-cookies": "~1.7.x",
+    "angular-ui-router": "~1.0.x",
+    "angular-locker": "2.0.4",
+    "angular-i18n": "v1.6.7-build.5497+sha.f876ab7",
+    "toastr": "2.1.1",
+    "cr-acl": "https://github.com/4CME/cr-acl.git#1.1.0",
+    "datatables.net": "1.10.16",
+    "angular-datatables": "~0.6.x",
+    "ngmap": "1.17.8",
+    "angularjs-datepicker": "2.1.23",
+    "angular-auto-complete": "1.7.4",
+    "angular-paging": "2.2.2",
+    "angularjs-slider": "6.4.0",
+    "components-font-awesome": "4.7.0",
+    "moment": "2.21.0",
+    "cycle": "https://github.com/malsup/cycle2.git#2.1.6",
+    "fullcalendar": "3.7.0",
+    "angular-strap": "2.3.12",
+    "ui-cropper": "1.0.x",
+    "ng-dropzone": "ngdropzone#2.0.2",
+    "dropzone": "4.3.0",
+    "angular-filter": "0.5.17",
+    "eonasdan-bootstrap-datetimepicker": "4.17.47",
+    "intl-tel-input": "9.0.14",
+    "angular-bootstrap": "2.5.x",
+    "angular-modal-service": "0.15.x",
+    "angular-ui-sortable": "0.19.x",
+    "bootstrap3-wysihtml5-bower": "0.3.x",
+    "angular-bootstrap-switch": "0.5.x",
+    "angular-chart.js": "1.1.x",
+    "chartjs-plugin-labels": "1.1.x",
+    "betsol-ng-intl-tel-input": "^1.3.2"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.7.x",
+    "angular-sanitize": "~1.7.x",
+    "angularjs-breakpoint": "*"
+  },
+  "resolutions": {
+    "angular": "~1.7.x",
+    "components-font-awesome": "4.7.0",
+    "jquery": "3.4.x",
+    "intl-tel-input": "9.x"
+  }
+}

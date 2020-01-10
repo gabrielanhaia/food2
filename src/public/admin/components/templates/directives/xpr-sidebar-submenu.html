@@ -1,0 +1,11 @@
+<ul class="nav nav-second-level collapse">
+
+    <li ng-repeat="(key, item) in menu">
+        <a ui-sref="{{item.state}}">
+            <i ng-if="item.icon" class="{{item.icon}}"></i>
+            <span class="title">{{item.name | xprTrans}}</span>
+        </a>
+        <xpr-sidebar-submenu menu="item.submenus" ng-if="item.submenus.length > 0"></xpr-sidebar-submenu>
+    </li>
+
+</ul>

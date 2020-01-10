@@ -1,0 +1,32 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Forms</h2>
+        <xpr-breadcrumb></xpr-breadcrumb>
+        <small>
+            Server side pagination listing example. Here you will find the list of complete of all existent
+            forms in the database.
+        </small>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins" ng-controller="form.listController as vm">
+        <div class="ibox-title">
+            <H5>{{ 'Forms' | xprTrans }}</h5>
+            <div class="ibox-tools">
+                <a ui-sref="new-form" class="btn btn-w-m btn-primary">
+                    <i class="fa fa-plus"></i> New form
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <table datatable=""
+                   dt-options="vm.dtOptions"
+                   dt-columns="vm.dtColumns"
+                   dt-instance="vm.dtInstance"
+                   class="row-border hover">
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+version: '2'
+
+networks:
+  default:
+    external:
+      name: ${APP_NAME}
+
+services:
+
+  mysql:
+    container_name: ${APP_NAME}_mysql_1
+    image: mysql:5.7
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql-mode="STRICT_TRANS_TABLES"
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=${APP_NAME}
+      - MYSQL_USER=${APP_NAME}
+      - MYSQL_PASSWORD=${APP_NAME}
+      - MYSQL_ROOT_PASSWORD=${APP_NAME}
+      - MYSQL_ROOT_HOST="%"
+    env_file:
+      - ${DEV_ENVFILE}
+
+  platform:
+    container_name: ${APP_NAME}_platform_1
+    image: ${APP_NAME}_base
+    command: /bin/sh -c /entrypoint_platform.sh
+    volumes:
+      - ../../src/:/var/www/html
+    environment:
+      - APP_NAME=${APP_NAME}
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+    env_file:
+      - ${DEV_ENVFILE}
+
+  # Container that runs cron jobs (it's the same as platform, just a different command
+  jobs:
+    container_name: ${APP_NAME}_jobs_1
+    image: ${APP_NAME}_base
+    command: /bin/sh -c /entrypoint_jobs.sh
+    volumes:
+      - ../../src/:/var/www/html
+      - ../../src/storage/logs/jobs/:/var/www/html/storage/logs/
+
+    environment:
+      - APP_NAME=${APP_NAME}
+    env_file:
+      - ${DEV_ENVFILE}
+
+  # This acts locally as the rancher load balancer with SSL certs
+  proxy:
+    image: jwilder/nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+      - ./proxy/ssl_certs:/etc/nginx/certs
+      - ./proxy/params.conf:/etc/nginx/conf.d/params.conf
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DEFAULT_HOST=${VIRTUAL_HOST}
+

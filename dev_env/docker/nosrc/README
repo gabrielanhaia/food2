@@ -1,0 +1,1 @@
+This is an empty src folder to make the developer environment build faster as it actually just need to map the code as a volume to real filesystem

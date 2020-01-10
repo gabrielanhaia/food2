@@ -1,0 +1,44 @@
+{
+    "name": "threadable-ux",
+    "authors": [
+        "Pablo Sanchez <pablo.s.sanchez@gmail.com>"
+    ],
+    "description": "AngularJS Seed",
+    "main": "index.html",
+    "keywords": [
+        "AngularJS",
+        "Seed"
+    ],
+    "license": "XPL",
+    "homepage": "https://threadable.io",
+    "private": true,
+    "dependencies": {
+        "bootstrap": "3.3.7",
+        "jquery": "3.4.x",
+        "system.js": "*",
+        "jquery-ui": "1.12.1",
+        "system.js": "0.21.0",
+        "oclazyload": "1.0.9",
+        "angular": "~1.7.x",
+        "angular-animate": "~1.7.x",
+        "angular-resource": "~1.7.x",
+        "angular-cookies": "~1.7.x",
+        "angular-ui-router": "~1.0.x",
+        "angular-locker": "2.0.4",
+        "angular-i18n": "v1.6.7-build.5497+sha.f876ab7",
+        "cr-acl": "https://github.com/4CME/cr-acl.git#1.1.0",
+        "datatables.net": "1.10.16",
+        "angular-datatables": "~0.6.x",
+        "toastr": "2.1.1",
+        "components-font-awesome": "4.7.0"
+    },
+    "devDependencies": {
+        "angular-mocks": "~1.7.x",
+        "angular-sanitize": "~1.7.x",
+        "angularjs-breakpoint": "*"
+    },
+    "resolutions": {
+        "angular": "~1.7.x",
+        "jquery": "3.4.x"
+    }
+}

@@ -1,0 +1,15 @@
+version: '2'
+
+networks:
+  default:
+    external:
+      name: ${APP_NAME}
+
+services:
+
+  base:
+    build:
+      context: ../../
+      dockerfile: ./Dockerfile
+      args:
+        - SRC_FOLDER=./dev_env/docker/nosrc
