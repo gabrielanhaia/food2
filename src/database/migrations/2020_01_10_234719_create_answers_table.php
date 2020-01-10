@@ -8,6 +8,8 @@ use Illuminate\Database\Migrations\Migration;
  * Class CreateAnswersTable
  *
  * Migration responsible for creating table "answers"
+ *
+ * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
  */
 class CreateAnswersTable extends Migration
 {
