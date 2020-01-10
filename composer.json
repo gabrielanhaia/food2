@@ -1,0 +1,5 @@
+{
+    "require": {
+        "eloquent/enumeration": "^6.0"
+    }
+}
