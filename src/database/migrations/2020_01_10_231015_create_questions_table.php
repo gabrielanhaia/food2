@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\QuestionTypeEnum;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -26,13 +25,7 @@ class CreateQuestionsTable extends Migration
             $table->bigInteger('form_id')->unsigned()->nullable(false);
             $table->text('description')->nullable(false);
             $table->boolean('mandoraty')->nullable(false);
-            $table->enum('type', [
-                QuestionTypeEnum::NUMBER,
-                QuestionTypeEnum::TEXT,
-                QuestionTypeEnum::DATE,
-                QuestionTypeEnum::RADIO,
-                QuestionTypeEnum::DROPDOWN,
-            ]);
+            $table->enum('type', ['number', 'text', 'date', 'radio', 'dropdown'])->nullable(false);
             $table->timestamps();
             $table->softDeletes()->index('index_questions_deleted_at');
         });
