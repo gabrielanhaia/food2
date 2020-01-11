@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\RepositoryServiceProvider;
+
 return [
 
     /*
@@ -176,6 +178,7 @@ return [
         OwenIt\Auditing\AuditingServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        App\Providers\RepositoryServiceProvider::class
     ],
 
     /*
