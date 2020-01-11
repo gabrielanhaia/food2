@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Entities\FormEntity;
+use App\Exceptions\Api\NotFoundException;
 use App\Exceptions\Api\UnprocessableEntityException;
 use App\Models\Form;
 use App\Models\Question;
@@ -96,10 +97,18 @@ class FormRepository extends AbstractFormRepository
      *
      * @param int $idForm Form Identifier
      * @return mixed
+     * @throws NotFoundException
      */
     public function deleteForm(int $idForm)
     {
-        // TODO: Implement deleteForm() method.
+        $form = $this->formModel->find($idForm);
+
+        if (empty($form)) {
+            throw new NotFoundException('Form not found.');
+        }
+
+        $form->questions()->delete();
+        $form->delete();
     }
 
     /**
@@ -109,7 +118,9 @@ class FormRepository extends AbstractFormRepository
      */
     public function listForms()
     {
-        // TODO: Implement listForms() method.
+        $forms = $this->formModel->all();
+
+        return $forms;
     }
 
     /**
@@ -117,9 +128,16 @@ class FormRepository extends AbstractFormRepository
      *
      * @param int $idForm Form identifier.
      * @return Form
+     * @throws NotFoundException
      */
     public function getForm(int $idForm): Form
     {
-        // TODO: Implement getForm() method.
+        $form = $this->formModel->find($idForm);
+
+        if (empty($form)) {
+            throw new NotFoundException('Form not found.');
+        }
+
+        return $form;
     }
 }

@@ -8,6 +8,7 @@ use App\Enums\HttpStatusCodeEnum;
 use App\Enums\QuestionTypeEnum;
 use App\Http\Requests\CreateFormRequest;
 use App\Http\Resources\Form;
+use App\Http\Resources\FormCollection;
 use App\Repositories\Contracts\AbstractFormRepository;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
@@ -70,5 +71,27 @@ class FormController extends Controller
         return (new Form($formCreated))
             ->response()
             ->setStatusCode(HttpStatusCodeEnum::CREATED);
+    }
+
+    /**
+     * Method responsible for listing forms available.
+     */
+    public function listForms()
+    {
+        $forms = $this->formRepository->listForms();
+
+        return new FormCollection($forms);
+    }
+
+    /**
+     * Method responsible for delete a form.
+     *
+     * @param int $formId Identifier of the form to be deleted.
+     */
+    public function deleteForm(int $formId)
+    {
+        $this->formRepository->deleteForm($formId);
+
+        response('', HttpStatusCodeEnum::NO_CONTENT);
     }
 }
