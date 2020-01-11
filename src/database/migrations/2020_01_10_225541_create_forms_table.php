@@ -24,10 +24,10 @@ class CreateFormsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->nullable(false);
             $table->string('name', 256)->unique();
-            $table->text('description');
-            $table->text('introduction');
-            $table->dateTime('start_publish');
-            $table->dateTime('end_publish');
+            $table->text('description')->nullable(true);
+            $table->text('introduction')->nullable(true);
+            $table->dateTime('start_publish')->nullable(true);
+            $table->dateTime('end_publish')->nullable(true);
             $table->timestamps();
             $table->softDeletes()->index('index_forms_deleted_at');
         });

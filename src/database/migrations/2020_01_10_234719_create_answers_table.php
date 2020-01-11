@@ -23,7 +23,7 @@ class CreateAnswersTable extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('question_id')->unsigned()->nullable(false);
-            $table->text('valid_value', 256);
+            $table->text('valid_value', 256)->nullable(true);
             $table->timestamps();
             $table->softDeletes()->index('index_answers_deleted_at');
         });

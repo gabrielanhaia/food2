@@ -22,9 +22,9 @@ class CreateUserAnswersTable extends Migration
             $table->bigInteger('user_id')->unsigned()->nullable(false);
             $table->bigInteger('question_id')->unsigned()->nullable(false);
             $table->bigInteger('answer_id')->unsigned()->nullable(false);
-            $table->text('text_answer');
-            $table->date('date_answer');
-            $table->float('number_answer');
+            $table->text('text_answer')->nullable(true);
+            $table->date('date_answer')->nullable(true);
+            $table->float('number_answer')->nullable(true);
             $table->timestamps();
             $table->softDeletes()->index('index_user_answers_deleted_at');
 
