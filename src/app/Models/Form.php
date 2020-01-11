@@ -7,15 +7,48 @@ use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Form
+ * @package App\Models
+ *
+ * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
+ */
 class Form extends Model implements Auditable
 {
     use AuditableTrait, SoftDeletes;
 
+    /** @var array $fillable Fillable fields. */
+    protected $fillable = [
+        'id',
+        'question_id',
+        'valid_value',
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
+    /** @var array $dates Date fields. */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    /**
+     * Retorn the author from the form.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function author()
     {
         return $this->belongsTo('\App\Models\User');
     }
 
+    /**
+     * Return the list of questions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function questions()
     {
         return $this->hasMany('\App\Models\Question');

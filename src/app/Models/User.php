@@ -10,7 +10,12 @@ use Laravel\Passport\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 
-
+/**
+ * Class User
+ * @package App\Models
+ *
+ * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
+ */
 class User extends Authenticatable implements Auditable, MustVerifyEmail
 {
     use AuditableTrait, SoftDeletes, HasApiTokens, Notifiable;
@@ -21,27 +26,35 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'email_verified_at', 'is_admin',
+        'name',
+        'email',
+        'password',
+        'email_verified_at',
+        'admin',
     ];
 
+    /** @var array $dates Date fields. */
+    protected $dates = [
+        'email_verified_at',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Return the list of answers for the user.
      *
-     * @var array
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
     public function answers()
     {
         return $this->hasMany('\App\Models\UserAnswer');
