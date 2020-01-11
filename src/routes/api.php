@@ -21,7 +21,8 @@ Route::prefix('/admin')->group(function () {
     Route::post('/login/', 'Admin\\Auth\\LoginController@login');
 
     Route::group([
-        'prefix' => 'forms'
+        'prefix' => 'forms',
+        'middleware' => 'auth:api'
     ], function ($router) {
         Route::put('', 'Admin\\FormController@createForm')->name('forms.create');
     });
