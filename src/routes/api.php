@@ -19,6 +19,12 @@ use Illuminate\Http\Request;
 
 Route::prefix('/admin')->group(function () {
     Route::post('/login/', 'Admin\\Auth\\LoginController@login');
+
+    Route::group([
+        'prefix' => 'forms'
+    ], function ($router) {
+        Route::put('', 'Admin\\FormController@createForm')->name('forms.create');
+    });
 });
 
 Route::middleware('auth:api')->prefix('/admin')->group(function () {
