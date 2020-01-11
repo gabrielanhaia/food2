@@ -42,12 +42,12 @@
         .state("edit-form", {
             breadCrumbName: "Edit form",
             parent: "main",
-            url: "/form/edit/:id",
+            url: "/formsedit/:id",
             templateUrl: MOD_PATH + "/components/templates/form/edit.html",
             controller: "form.formController",
             resolve: {
                 formData: ['$http', '$stateParams', function ($http, $stateParams) {
-                    var backendUrl = config.backend + '/administration/form/' + $stateParams.id;
+                    var backendUrl = config.backend + '/forms/' + $stateParams.id;
                     return $http.get(backendUrl)
                         .then(function (response) {
                                 return eval(response.data);

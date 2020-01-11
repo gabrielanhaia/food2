@@ -16,7 +16,7 @@
 
                 var vm = this;
 
-                var backendUrl = config.backend + 'administration/form/';
+                var backendUrl = config.backend + 'forms';
 
                 vm.dtOptions = DTOptionsBuilder
 

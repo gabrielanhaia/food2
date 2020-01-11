@@ -7,7 +7,7 @@
             "$rootScope", "$scope", "$state", "$window", "$http", "$cookies", "formData",
             function ($rootScope, $scope, $state, $window, $http, $cookies, formData) {
 
-                var backendUrl = config.backend + 'administration/form/';
+                var backendUrl = config.backend + 'forms';
 
                 $scope.formData = formData;
 
