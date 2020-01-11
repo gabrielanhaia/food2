@@ -20,12 +20,8 @@ class Answer extends Model implements Auditable
     /** @var array $fillable Fillable fields. */
     protected $fillable = [
         'id',
-        'user_id',
-        'name',
-        'description',
-        'introduction',
-        'start_publish',
-        'end_publish',
+        'question_id',
+        'valid_value',
         'created_at',
         'updated_at',
         'deleted_at'
@@ -36,8 +32,6 @@ class Answer extends Model implements Auditable
         'created_at',
         'updated_at',
         'deleted_at',
-        'start_publish',
-        'end_publish',
     ];
 
     /**

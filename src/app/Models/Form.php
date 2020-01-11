@@ -20,8 +20,12 @@ class Form extends Model implements Auditable
     /** @var array $fillable Fillable fields. */
     protected $fillable = [
         'id',
-        'question_id',
-        'valid_value',
+        'user_id',
+        'name',
+        'description',
+        'introduction',
+        'start_publish',
+        'end_publish',
         'created_at',
         'updated_at',
         'deleted_at'
@@ -32,6 +36,8 @@ class Form extends Model implements Auditable
         'created_at',
         'updated_at',
         'deleted_at',
+        'start_publish',
+        'end_publish',
     ];
 
     /**
