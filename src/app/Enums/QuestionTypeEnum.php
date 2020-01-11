@@ -13,7 +13,6 @@ use Eloquent\Enumeration\AbstractEnumeration;
  * @method static $this DATE()
  * @method static $this RADIO()
  * @method static $this DROPDOWN()
-
  * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
  */
 class QuestionTypeEnum extends AbstractEnumeration
@@ -32,4 +31,16 @@ class QuestionTypeEnum extends AbstractEnumeration
 
     /** @var string DROPDOWN Type dropdown. */
     const DROPDOWN = 'dropdown';
+
+    /**
+     * @return string
+     */
+    public static function formValidationString(): string
+    {
+        return ('in:' . self::NUMBER
+            . ',' . self::TEXT
+            . ',' . self::RADIO
+            . ',' . self::DATE
+            . ',' . self::DROPDOWN);
+    }
 }
