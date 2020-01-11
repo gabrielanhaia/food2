@@ -27,7 +27,7 @@ Route::prefix('/admin')->group(function () {
         Route::put('', 'Admin\\FormController@createForm')->name('forms.create');
         Route::get('', 'Admin\\FormController@listForms')->name('forms.list');
         Route::get('{id}', 'Admin\\FormController@getForm')->name('forms.get');
-        Route::get('{id}', 'Admin\\FormController@updateForm')->name('forms.update');
+        Route::post('{id}', 'Admin\\FormController@updateForm')->name('forms.update');
         Route::delete('{id}', 'Admin\\FormController@deleteForm')->name('forms.delete');
     });
 });

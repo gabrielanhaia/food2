@@ -47,7 +47,7 @@
             controller: "form.formController",
             resolve: {
                 formData: ['$http', '$stateParams', function ($http, $stateParams) {
-                    var backendUrl = config.backend + '/forms/' + $stateParams.id;
+                    var backendUrl = config.backend + 'forms/' + $stateParams.id;
                     return $http.get(backendUrl)
                         .then(function (response) {
                                 return eval(response.data);

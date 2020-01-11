@@ -94,4 +94,17 @@ class FormController extends Controller
 
         response('', HttpStatusCodeEnum::NO_CONTENT);
     }
+
+    /**
+     * Method responsible for getting a form.
+     *
+     * @param int $formId Form identifier.
+     * @return Form
+     */
+    public function getForm(int $formId)
+    {
+        $form = $this->formRepository->getForm($formId);
+
+        return new Form($form);
+    }
 }

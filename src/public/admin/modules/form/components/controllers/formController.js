@@ -105,13 +105,16 @@
                 $scope.save = function () {
                     prepareDataToSubmit()
                     if ($scope.validate()) {
+                        var sestkn = window.localStorage.getItem('_____sesstkn');
+
                         $http(
                             {
                                 method: 'put',
                                 url: backendUrl,
                                 withCredentials: true,
                                 headers: {
-                                    'X-XSRF-TOKEN': $cookies.get('XSRF-TOKEN')
+                                    'X-XSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
+                                    'Authorization': 'Bearer ' + sestkn
                                 },
                                 data: $scope.formData
                             }

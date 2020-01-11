@@ -29,13 +29,14 @@
                     .withOption('serverSide', true)
                     .withOption('ajax', {
                         url: backendUrl,
-                        type: 'POST',
+                        type: 'GET',
                         "data": function (data) {
                             data.searchData = $("#searchForm").serializeArray()
                         },
                         //Those are the options that make the Cross site voodoo possible, headers and withCredentials
                         headers: {
-                            'X-XSRF-TOKEN': $cookies.get('XSRF-TOKEN')
+                            'X-XSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
+                            'Authorization': 'Bearer ' + window.localStorage.getItem('_____sesstkn')
                         },
                         xhrFields: {
                             withCredentials: true
@@ -63,10 +64,11 @@
                         return $http(
                             {
                                 method: 'delete',
-                                url: backendUrl + id,
+                                url: backendUrl + '/' + id,
                                 withCredentials: true,
                                 headers: {
-                                    'X-XSRF-TOKEN': $cookies.get('XSRF-TOKEN')
+                                    'X-XSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
+                                    'Authorization': 'Bearer ' + window.localStorage.getItem('_____sesstkn')
                                 },
                             }
                         ).then(function () {
@@ -79,7 +81,7 @@
                     DTColumnBuilder.newColumn('name').withTitle(xprTrans('Form name')),
                     DTColumnBuilder.newColumn('description').withTitle(xprTrans('Description')),
                     DTColumnBuilder.newColumn('start_publish').withTitle(xprTrans('Start date')),
-                    DTColumnBuilder.newColumn('updated_at').withTitle(xprTrans('End date')),
+                    DTColumnBuilder.newColumn('end_publish').withTitle(xprTrans('End date')),
                     DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable()
                         .renderWith(function (data, type, full, meta) {
                             return '<button class="btn btn-primary" ng-click="edit(' + data.id + ')">' +
