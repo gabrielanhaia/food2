@@ -11,6 +11,7 @@ use App\Http\Resources\Form;
 use App\Repositories\Contracts\AbstractFormRepository;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class FormController extends Controller
 {
@@ -32,9 +33,10 @@ class FormController extends Controller
      * Method resposible for create new forms.
      *
      * @param CreateFormRequest $request
+     * @param Auth $auth
      * @return \Illuminate\Http\JsonResponse
      */
-    public function createForm(CreateFormRequest $request)
+    public function createForm(CreateFormRequest $request, Auth $auth)
     {
         $startPublish = null;
         if (!empty($request->post('start_publish'))) {
@@ -48,7 +50,7 @@ class FormController extends Controller
 
         $formEntity = new FormEntity;
         $formEntity->setName($request->post('name'))
-            ->setUserId($request->post('user_id'))
+            ->setUserId($auth::user()->id)
             ->setDescription($request->post('description'))
             ->setIntroduction($request->post('introduction'))
             ->setStartPublish($startPublish)
