@@ -65,4 +65,22 @@ abstract class AbstractFormRepository
      * @return Form
      */
     public abstract function getForm(int $idForm): Form;
+
+    /**
+     * @return Form
+     */
+    public function getFormModel(): Form
+    {
+        return $this->formModel;
+    }
+
+    /**
+     * @param Form $formModel
+     * @return AbstractFormRepository
+     */
+    public function setFormModel(Form $formModel): AbstractFormRepository
+    {
+        $this->formModel = $formModel;
+        return $this;
+    }
 }

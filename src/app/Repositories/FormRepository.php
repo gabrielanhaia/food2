@@ -97,7 +97,7 @@ class FormRepository extends AbstractFormRepository
         $form = $this->formModel->find($formId);
 
         if (empty($form)) {
-            throw new NotFoundException('Form not found.');
+            throw new NotFoundException(__('api.form_not_found'));
         }
 
         foreach ($form->questions as $question) {
@@ -174,7 +174,7 @@ class FormRepository extends AbstractFormRepository
         $form = $this->formModel->find($idForm);
 
         if (empty($form)) {
-            throw new NotFoundException('Form not found.');
+            throw new NotFoundException(__('api.form_not_found'));
         }
 
         foreach ($form->questions as $question) {
@@ -182,7 +182,6 @@ class FormRepository extends AbstractFormRepository
                 throw new UnauthorizedException("It's not possible delete a form with answers.");
             }
         }
-
 
         $form->questions()->delete();
         $form->delete();
@@ -212,7 +211,7 @@ class FormRepository extends AbstractFormRepository
         $form = $this->formModel->find($idForm);
 
         if (empty($form)) {
-            throw new NotFoundException('Form not found.');
+            throw new NotFoundException(__('api.form_not_found'));
         }
 
         return $form;
