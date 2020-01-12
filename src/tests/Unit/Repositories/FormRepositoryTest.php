@@ -1,11 +1,18 @@
 <?php
 
+use App\Entities\FormEntity;
+use App\Entities\QuestionEntity;
+use App\Enums\QuestionTypeEnum;
 use App\Exceptions\Api\NotFoundException;
 use App\Exceptions\Api\UnauthorizedException;
+use App\Exceptions\Api\UnprocessableEntityException;
 use App\Models\Form;
+use App\Models\User;
 use App\Models\UserAnswer;
 use App\Repositories\FormRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 /**
@@ -173,5 +180,204 @@ class FormRepositoryTest extends TestCase
         $formRepository->setFormModel($formModelMock);
 
         $formRepository->deleteForm($formId);
+    }
+
+    /**
+     * Test error trying create a new form with a author (user) id not found.
+     */
+    public function testCreateFormErrorAuthorIdNotFound()
+    {
+        $this->expectException(UnprocessableEntityException::class);
+        $this->expectExceptionMessage(__('api.error_create_form_user_not_found'));
+
+        $userId = 343423423432;
+
+        $formEntity = new FormEntity;
+        $formEntity->setUserId($userId);
+
+        $userModelMock = Mockery::mock(User::class);
+        $userModelMock->shouldReceive('find')
+            ->with($userId)
+            ->once()
+            ->andReturnNull();
+
+        $formRepository = new FormRepository;
+        $formRepository->setUserModel($userModelMock);
+
+        $formRepository->createForm($formEntity);
+    }
+
+    /**
+     * Test error creating form with start date lower than today.
+     *
+     * @throws UnprocessableEntityException
+     */
+    public function testCreateFormErrorStartDateLowerThanToday()
+    {
+        $this->expectException(UnprocessableEntityException::class);
+        $this->expectExceptionMessage(__('api.error_create_form_start_date_lower_today'));
+
+        $userId = 343423423432;
+        $today = Carbon::create(2020, 10, 11);
+        $startDate = Carbon::create(2020, 10, 10);
+        $endDate = Carbon::create(2020, 10, 15);
+
+        $formEntity = new FormEntity;
+        $formEntity->setUserId($userId)
+            ->setStartPublish($startDate)
+            ->setEndPublish($endDate);
+
+        $userModelMock = Mockery::mock(User::class);
+        $userModelMock->shouldReceive('find')
+            ->with($userId)
+            ->once()
+            ->andReturnSelf();
+
+        Carbon::setTestNow($today);
+
+        $formRepository = new FormRepository;
+        $formRepository->setUserModel($userModelMock);
+
+        $formRepository->createForm($formEntity);
+    }
+
+    /**
+     * Test error creating form with end date lower than today.
+     *
+     * @throws UnprocessableEntityException
+     */
+    public function testCreateFormErrorEndDateLowerThanToday()
+    {
+        $this->expectException(UnprocessableEntityException::class);
+        $this->expectExceptionMessage(__('api.error_create_form_end_date_lower_today'));
+
+        $userId = 343423423432;
+        $today = Carbon::create(2020, 10, 20);
+        $startDate = Carbon::create(2020, 10, 21);
+        $endDate = Carbon::create(2020, 9, 9);
+
+        $formEntity = new FormEntity;
+        $formEntity->setUserId($userId)
+            ->setStartPublish($startDate)
+            ->setEndPublish($endDate);
+
+        $userModelMock = Mockery::mock(User::class);
+        $userModelMock->shouldReceive('find')
+            ->with($userId)
+            ->once()
+            ->andReturnSelf();
+
+        Carbon::setTestNow($today);
+
+        $formRepository = new FormRepository;
+        $formRepository->setUserModel($userModelMock);
+
+        $formRepository->createForm($formEntity);
+    }
+
+    /**
+     * Test error creating form with end date lower than start date.
+     *
+     * @throws UnprocessableEntityException
+     */
+    public function testCreateFormErrorEndDateLowerThanStartDate()
+    {
+        $this->expectException(UnprocessableEntityException::class);
+        $this->expectExceptionMessage(__('api.error_create_form_end_date_lower_start_date'));
+
+        $userId = 343423423432;
+        $today = Carbon::create(2020, 10, 20);
+        $startDate = Carbon::create(2020, 10, 22);
+        $endDate = Carbon::create(2020, 10, 21);
+
+        $formEntity = new FormEntity;
+        $formEntity->setUserId($userId)
+            ->setStartPublish($startDate)
+            ->setEndPublish($endDate);
+
+        $userModelMock = Mockery::mock(User::class);
+        $userModelMock->shouldReceive('find')
+            ->with($userId)
+            ->once()
+            ->andReturnSelf();
+
+        Carbon::setTestNow($today);
+
+        $formRepository = new FormRepository;
+        $formRepository->setUserModel($userModelMock);
+
+        $formRepository->createForm($formEntity);
+    }
+
+    public function testCreateFormSuccess()
+    {
+        $userId = 343423423432;
+        $today = Carbon::create(2020, 10, 20);
+        $startDate = Carbon::create(2020, 10, 22);
+        $endDate = Carbon::create(2020, 10, 23);
+        $name = 'NAME';
+        $description = 'DESCRIPTION';
+        $introduction = 'INTRODUCTION';
+
+        $questionMandatory = true;
+        $questionType = QuestionTypeEnum::DROPDOWN();
+        $questionDescription = 'QUESTION DESCRIPTION';
+
+        $question = new QuestionEntity;
+        $question->setMandatory($questionMandatory)
+            ->setType($questionType)
+            ->setDescription($questionDescription);
+
+        $formEntity = new FormEntity;
+        $formEntity->setUserId($userId)
+            ->setStartPublish($startDate)
+            ->setEndPublish($endDate)
+            ->setName($name)
+            ->setDescription($description)
+            ->setIntroduction($introduction)
+            ->setQuestions([$question]);
+
+        $userModelMock = Mockery::mock(User::class);
+        $userModelMock->shouldReceive('find')
+            ->with($userId)
+            ->once()
+            ->andReturnSelf();
+
+        Carbon::setTestNow($today);
+
+        DB::shouldReceive('beginTransaction')
+            ->once();
+
+        $formModelMock = Mockery::mock(Form::class);
+        $formModelMock->shouldReceive('create')
+            ->once()
+            ->with([
+                'user_id' => $userId,
+                'name' => $name,
+                'description' => $description,
+                'introduction' => $introduction,
+                'start_publish' => $startDate,
+                'end_publish' => $endDate
+            ])
+            ->andReturnSelf();
+
+        $formModelMock->shouldReceive('questions')
+            ->once()
+            ->withNoArgs()
+            ->andReturnSelf();
+
+        $formModelMock->shouldReceive('saveMany')
+            ->once();
+
+        DB::shouldReceive('commit')
+            ->once();
+
+        $formRepository = new FormRepository;
+        $formRepository->setUserModel($userModelMock)
+            ->setFormModel($formModelMock);
+
+        $result = $formRepository->createForm($formEntity);
+
+        $this->assertEquals($formModelMock, $result);
     }
 }

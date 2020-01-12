@@ -5,6 +5,7 @@ namespace App\Repositories\Contracts;
 
 use App\Entities\FormEntity;
 use App\Models\Form;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 /**
@@ -18,12 +19,16 @@ abstract class AbstractFormRepository
     /** @var Form $formModel Model of forms. */
     protected $formModel;
 
+    /** @var User $userModel Model of users. */
+    protected $userModel;
+
     /**
      * AbstractFormRepository constructor.
      */
     public function __construct()
     {
         $this->formModel = new Form;
+        $this->userModel = new User;
     }
 
     /**
@@ -81,6 +86,24 @@ abstract class AbstractFormRepository
     public function setFormModel(Form $formModel): AbstractFormRepository
     {
         $this->formModel = $formModel;
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUserModel(): User
+    {
+        return $this->userModel;
+    }
+
+    /**
+     * @param User $userModel
+     * @return AbstractFormRepository
+     */
+    public function setUserModel(User $userModel): AbstractFormRepository
+    {
+        $this->userModel = $userModel;
         return $this;
     }
 }
