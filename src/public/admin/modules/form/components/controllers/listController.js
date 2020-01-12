@@ -76,7 +76,6 @@
                         });
                     }
                 };
-
                 vm.dtColumns = [
                     DTColumnBuilder.newColumn('name').withTitle(xprTrans('Form name')),
                     DTColumnBuilder.newColumn('description').withTitle(xprTrans('Description')),

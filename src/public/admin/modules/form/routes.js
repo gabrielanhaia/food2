@@ -50,7 +50,7 @@
                     var backendUrl = config.backend + 'forms/' + $stateParams.id;
                     return $http.get(backendUrl)
                         .then(function (response) {
-                                return eval(response.data);
+                                return eval(response.data.data);
                             }
                         );
                 }],

@@ -107,10 +107,17 @@
                     if ($scope.validate()) {
                         var sestkn = window.localStorage.getItem('_____sesstkn');
 
+                        let url = backendUrl;
+                        let httpRequestMethod = 'post';
+                        if ($scope.formData.id) {
+                            url += '/' + $scope.formData.id;
+                            httpRequestMethod = 'put';
+                        }
+
                         $http(
                             {
-                                method: 'put',
-                                url: backendUrl,
+                                method: httpRequestMethod,
+                                url: url,
                                 withCredentials: true,
                                 headers: {
                                     'X-XSRF-TOKEN': $cookies.get('XSRF-TOKEN'),
@@ -202,8 +209,8 @@
                         $scope.formData.description = "";
                         $scope.formData.introduction = "";
                         $scope.formData.questions = [];
-                        $scope.formData.start_publish = ''
-                        $scope.formData.end_publish = ''
+                        $scope.formData.start_publish = ""
+                        $scope.formData.end_publish = ""
                     }
 
                     /**
