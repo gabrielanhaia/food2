@@ -84,12 +84,73 @@ class FormRepository extends AbstractFormRepository
     /**
      * Create a form.
      *
+     * @param int $formId Identifier from the form that will be updated.
      * @param FormEntity $formEntity
      * @return mixed
+     * @throws UnprocessableEntityException
+     * @throws NotFoundException
      */
-    public function updateForm(FormEntity $formEntity): Form
+    public function updateForm(int $formId, FormEntity $formEntity): Form
     {
-        // TODO: Implement updateForm() method.
+        $form = $this->formModel->find($formId);
+
+        if (empty($form)) {
+            throw new NotFoundException('Form not found.');
+        }
+
+        $user = User::find($formEntity->getUserId());
+
+        if (empty($user)) {
+            throw new UnprocessableEntityException('User not found.');
+        }
+
+        $startPublishDate = $formEntity->getStartPublish();
+        $endPublishDate = $formEntity->getEndPublish();
+
+        if (!empty($startPublishDate)) {
+            if ($startPublishDate->lessThan(Carbon::today())) {
+                throw new UnprocessableEntityException('The start publish date must be greather or equeals than today.');
+            }
+        }
+
+        if (!empty($endPublishDate)) {
+            if ($endPublishDate->lessThan(Carbon::today())) {
+                throw new UnprocessableEntityException('The end publish date must be greather or equeals than today.');
+            }
+
+            if (!empty($startPublishDate)
+                && $endPublishDate->lessThan($startPublishDate)) {
+                throw new UnprocessableEntityException('The end publish date can\'t be before publish start date.');
+            }
+        }
+
+        DB::beginTransaction();
+        $form->update([
+            'user_id' => $formEntity->getUserId(),
+            'name' => $formEntity->getName(),
+            'description' => $formEntity->getDescription(),
+            'introduction' => $formEntity->getIntroduction(),
+            'start_publish' => $formEntity->getStartPublish(),
+            'end_publish' => $formEntity->getEndPublish(),
+        ]);
+
+        $form->questions()->delete();
+
+        $questionList = [];
+        foreach ($formEntity->getQuestions() as $question) {
+            $questionList[] = new Question([
+                'description' => $question->getDescription(),
+                'mandatory' => (int)$question->isMandatory(),
+                'type' => $question->getType()->value(),
+            ]);
+        }
+
+        $form->questions()->saveMany($questionList);
+        DB::commit();
+
+        $form->refresh();
+
+        return $form;
     }
 
     /**

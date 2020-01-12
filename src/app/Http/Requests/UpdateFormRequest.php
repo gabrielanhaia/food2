@@ -6,11 +6,12 @@ use App\Enums\QuestionTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class responsible for validating the requests to create a new form.
- *
+ * Class UpdateFormRequest
  * @package App\Http\Requests
+ *
+ * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
  */
-class CreateFormRequest extends FormRequest
+class UpdateFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +31,7 @@ class CreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:forms,name|string|max:255',
+            'name' => "required|string|max:255|unique:forms,name,{$this->id}",
             'description' => 'nullable|string',
             'introduction' => 'nullable|string',
             'start_publish' => 'nullable|date_format:Y-m-d',

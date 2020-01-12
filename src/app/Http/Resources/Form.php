@@ -4,6 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class Form
+ * @package App\Http\Resources
+ *
+ * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
+ */
 class Form extends JsonResource
 {
     /**

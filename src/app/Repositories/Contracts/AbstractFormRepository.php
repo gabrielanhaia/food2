@@ -37,10 +37,11 @@ abstract class AbstractFormRepository
     /**
      * Create a form.
      *
+     * @param int $formId Identifier from the form that will be updated.
      * @param FormEntity $formEntity
      * @return mixed
      */
-    public abstract function updateForm(FormEntity $formEntity): Form;
+    public abstract function updateForm(int $formId, FormEntity $formEntity): Form;
 
     /**
      * Delete a form.
