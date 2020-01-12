@@ -30,6 +30,10 @@ class Create extends DefaultFormAction
      */
     public function getData(): array
     {
+        if (getenv('APP_ENV') === 'testing') {
+            return [];
+        }
+
         $form = Form::find($this->formId);
         $user = User::find($form->user_id);
 

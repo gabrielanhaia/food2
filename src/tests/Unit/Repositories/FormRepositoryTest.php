@@ -373,7 +373,8 @@ class FormRepositoryTest extends TestCase
 
         $formModelMock->shouldReceive('getAttribute')
             ->with('id')
-            ->once();
+            ->twice()
+            ->andReturn(12321);
 
         DB::shouldReceive('commit')
             ->once();

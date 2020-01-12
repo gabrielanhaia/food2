@@ -23,6 +23,10 @@ abstract class DefaultAction implements ShouldQueue
      */
     public function register(): void
     {
+        if (getenv('APP_ENV') === 'testing') {
+            return;
+        }
+
         $webHooks = $this->getWebHooks();
 
         if (sizeof($webHooks) === 0) {
@@ -37,6 +41,10 @@ abstract class DefaultAction implements ShouldQueue
      */
     public function handle()
     {
+        if (getenv('APP_ENV') === 'testing') {
+            return;
+        }
+
         $webHooks = $this->getWebHooks();
 
         if (sizeof($webHooks) === 0) {
