@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1\Admin;
 
+use App\Entities\AnswerEntity;
 use App\Entities\FormEntity;
 use App\Entities\QuestionEntity;
 use App\Enums\HttpStatusCodeEnum;
@@ -64,10 +65,20 @@ class FormController extends Controller
 
         $formQuestions = [];
         foreach ($request->post('questions') as $question) {
+            $questionAnswers = [];
+
+            if (isset($question['answers'])) {
+                foreach ($question['answers'] as $answer) {
+                    $questionAnswers[] = (new AnswerEntity)
+                        ->setValidValue($answer['valid_value']);
+                }
+            }
+
             $formQuestions[] = (new QuestionEntity)
                 ->setDescription($question['description'])
                 ->setMandatory($question['mandatory'])
-                ->setType(QuestionTypeEnum::memberByValue($question['type']));
+                ->setType(QuestionTypeEnum::memberByValue($question['type']))
+                ->setAnswers($questionAnswers);
         }
         $formEntity->setQuestions($formQuestions);
 
@@ -109,10 +120,20 @@ class FormController extends Controller
 
         $formQuestions = [];
         foreach ($request->post('questions') as $question) {
+            $questionAnswers = [];
+
+            if (isset($question['answers'])) {
+                foreach ($question['answers'] as $answer) {
+                    $questionAnswers[] = (new AnswerEntity)
+                        ->setValidValue($answer['valid_value']);
+                }
+            }
+
             $formQuestions[] = (new QuestionEntity)
                 ->setDescription($question['description'])
                 ->setMandatory($question['mandatory'])
-                ->setType(QuestionTypeEnum::memberByValue($question['type']));
+                ->setType(QuestionTypeEnum::memberByValue($question['type']))
+                ->setAnswers($questionAnswers);
         }
         $formEntity->setQuestions($formQuestions);
 

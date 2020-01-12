@@ -26,6 +26,9 @@ class QuestionEntity
     /** @var QuestionTypeEnum $type */
     protected $type;
 
+    /** @var AnswerEntity[]|null $answers Possible answers. */
+    protected $answers;
+
     /** @var Carbon|null $endPublish */
     protected $createdAt;
 
@@ -190,6 +193,24 @@ class QuestionEntity
         }
 
         $this->deletedAt = $deletedAt;
+        return $this;
+    }
+
+    /**
+     * @return AnswerEntity[]|null
+     */
+    public function getAnswers(): ?array
+    {
+        return $this->answers;
+    }
+
+    /**
+     * @param AnswerEntity[]|null $answers
+     * @return QuestionEntity
+     */
+    public function setAnswers(?array $answers): QuestionEntity
+    {
+        $this->answers = $answers;
         return $this;
     }
 }

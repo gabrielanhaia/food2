@@ -1,19 +1,12 @@
 <?php
 
-use App\Entities\FormEntity;
-use App\Entities\QuestionEntity;
+use App\Entities\{FormEntity, QuestionEntity};
 use App\Enums\QuestionTypeEnum;
-use App\Exceptions\Api\NotFoundException;
-use App\Exceptions\Api\UnauthorizedException;
-use App\Exceptions\Api\UnprocessableEntityException;
-use App\Models\Form;
-use App\Models\User;
-use App\Models\UserAnswer;
-use App\Repositories\FormRepository;
+use App\Exceptions\{Api\NotFoundException, Api\UnauthorizedException, Api\UnprocessableEntityException};
+use App\Models\{Form, Question, User, UserAnswer};
+use App\Repositories\V1\FormRepository;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\{Collection, Facades\DB, Facades\Log};
 use Tests\TestCase;
 
 /**
@@ -312,6 +305,11 @@ class FormRepositoryTest extends TestCase
         $formRepository->createForm($formEntity);
     }
 
+    /**
+     * Test success creating a form.
+     *
+     * @throws UnprocessableEntityException
+     */
     public function testCreateFormSuccess()
     {
         $userId = 343423423432;
@@ -364,13 +362,14 @@ class FormRepositoryTest extends TestCase
             ])
             ->andReturnSelf();
 
+        $questionsMock = Mockery::mock(stdClass::class);
+        $questionsMock->shouldReceive('save')
+            ->withAnyArgs();
+
         $formModelMock->shouldReceive('questions')
             ->once()
             ->withNoArgs()
-            ->andReturnSelf();
-
-        $formModelMock->shouldReceive('saveMany')
-            ->once();
+            ->andReturn($questionsMock);
 
         $formModelMock->shouldReceive('getAttribute')
             ->with('id')

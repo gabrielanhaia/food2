@@ -39,7 +39,8 @@ class UpdateFormRequest extends FormRequest
             'questions' => 'required|array',
             'questions.*.description' => 'required|string',
             'questions.*.mandatory' => 'required|boolean',
-            'questions.*.type' => 'required|' . QuestionTypeEnum::formValidationString()
+            'questions.*.type' => 'required|' . QuestionTypeEnum::formValidationString(),
+            'questions.*.answers.*.valid_value' => 'string'
         ];
     }
 }

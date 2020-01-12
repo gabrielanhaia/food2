@@ -4,6 +4,12 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
+/**
+ * Class FormCollection
+ * @package App\Http\Resources\V1
+ *
+ * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
+ */
 class FormCollection extends ResourceCollection
 {
     /**

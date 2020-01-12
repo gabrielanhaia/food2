@@ -6,7 +6,8 @@ namespace App\Repositories\V1;
 
 use App\Entities\FormEntity;
 use App\Exceptions\{Api\NotFoundException, Api\UnauthorizedException, Api\UnprocessableEntityException};
-use App\Models\{Form, Question, User};
+use App\Enums\QuestionTypeEnum;
+use App\Models\{Answer, Form, Question, User};
 use App\Repositories\V1\Contracts\AbstractFormRepository;
 use Carbon\Carbon;
 use Illuminate\Support\{Collection, Facades\DB, Facades\Log};
@@ -62,16 +63,28 @@ class FormRepository extends AbstractFormRepository
             'end_publish' => $formEntity->getEndPublish(),
         ]);
 
-        $questionList = [];
         foreach ($formEntity->getQuestions() as $question) {
-            $questionList[] = new Question([
+            $questionToBeCreated = new Question([
                 'description' => $question->getDescription(),
                 'mandatory' => (int)$question->isMandatory(),
                 'type' => $question->getType()->value(),
             ]);
+            $questionCreated = $formCreated->questions()->save($questionToBeCreated);
+
+            if (
+                (in_array($question->getType()->value(), [QuestionTypeEnum::DROPDOWN, QuestionTypeEnum::RADIO]))
+                && !empty($question->getAnswers())
+            ) {
+                foreach ($question->getAnswers() as $answer) {
+                    $questionCreated->answers()->save(
+                        new Answer([
+                            'valid_value' => $answer->getValidValue()
+                        ])
+                    );
+                }
+            }
         }
 
-        $formCreated->questions()->saveMany($questionList);
         DB::commit();
 
         Log::info('form_created', [
@@ -101,9 +114,9 @@ class FormRepository extends AbstractFormRepository
         }
 
         foreach ($form->questions as $question) {
-           if ($question->usersAnswers->count() > 0) {
-               throw new UnauthorizedException("It's not possible update a form with answers.");
-           }
+            if ($question->usersAnswers->count() > 0) {
+                throw new UnauthorizedException("It's not possible update a form with answers.");
+            }
         }
 
         $user = User::find($formEntity->getUserId());
@@ -142,18 +155,33 @@ class FormRepository extends AbstractFormRepository
             'end_publish' => $formEntity->getEndPublish(),
         ]);
 
+        foreach ($form->questions as $question) {
+            $question->answers()->delete();
+        }
         $form->questions()->delete();
 
-        $questionList = [];
         foreach ($formEntity->getQuestions() as $question) {
-            $questionList[] = new Question([
-                'description' => $question->getDescription(),
-                'mandatory' => (int)$question->isMandatory(),
-                'type' => $question->getType()->value(),
-            ]);
-        }
+            $questionCreated = $form->questions()->save(
+                new Question([
+                    'description' => $question->getDescription(),
+                    'mandatory' => (int)$question->isMandatory(),
+                    'type' => $question->getType()->value(),
+                ])
+            );
 
-        $form->questions()->saveMany($questionList);
+            if (
+                (in_array($question->getType()->value(), [QuestionTypeEnum::DROPDOWN, QuestionTypeEnum::RADIO]))
+                && !empty($question->getAnswers())
+            ) {
+                foreach ($question->getAnswers() as $answer) {
+                    $questionCreated->answers()->save(
+                        new Answer([
+                            'valid_value' => $answer->getValidValue()
+                        ])
+                    );
+                }
+            }
+        }
         DB::commit();
 
         $form->refresh();
