@@ -29,7 +29,7 @@ abstract class DefaultAction implements ShouldQueue
             return;
         }
 
-        dispatch_now($this);
+        dispatch($this);
     }
 
     /**
