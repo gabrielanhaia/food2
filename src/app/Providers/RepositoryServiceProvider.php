@@ -5,6 +5,12 @@ namespace App\Providers;
 use App\Repositories\{V1\Contracts\AbstractFormRepository, V1\FormRepository};
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class RepositoryServiceProvider
+ * @package App\Providers
+ *
+ * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
+ */
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
