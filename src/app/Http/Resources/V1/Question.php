@@ -26,6 +26,7 @@ class Question extends JsonResource
             "description" => (string)$this->description,
             "mandatory" => $this->mandatory,
             "type" => $this->type,
+            "answers" => new AnswerCollection($this->answers),
             "updated_at" => $this->updated_at,
             "created_at" => $this->created_at,
         ];
