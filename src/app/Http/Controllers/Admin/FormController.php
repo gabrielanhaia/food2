@@ -79,6 +79,11 @@ class FormController extends Controller
             ->setStatusCode(HttpStatusCodeEnum::CREATED);
     }
 
+    public function updateForm()
+    {
+
+    }
+
     /**
      * Method responsible for listing forms available.
      */

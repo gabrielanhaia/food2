@@ -30,7 +30,7 @@ class CreateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|unique:forms,name|string|max:255',
             'description' => 'nullable|string',
             'introduction' => 'nullable|string',
             'start_publish' => 'nullable|date_format:Y-m-d',
