@@ -3,9 +3,8 @@
 
 namespace App\Service\Webhooks\Scopes\Forms;
 
-use App\Service\Webhooks\Scopes\Forms\Actions\Create;
-use App\Service\Webhooks\Scopes\Forms\Actions\Update;
-use App\Service\Weebhooks\Contracts\ActionInterface;
+use App\Service\Webhooks\Scopes\Forms\Actions\{Create, Update};
+use App\Service\Weebhooks\Contracts\DefaultAction;
 
 /**
  * Class WeebhookFormFactory
@@ -30,17 +29,18 @@ class WebHookFormFactory
     }
 
     /**
-     * @return ActionInterface
+     * @param null $firstParam
+     * @return DefaultAction
      * @throws \Exception
      */
-    public function make(): ActionInterface
+    public function make($firstParam = null): DefaultAction
     {
         switch ($this->actionEnum->value()) {
             case FormActionEnum::CREATE_FORM:
-                return new Create;
+                return new Create($firstParam);
                 break;
             case FormActionEnum::UPDATE_FORM:
-                return new Update;
+                return new Update($firstParam);
                 break;
             default:
                 throw new \Exception('Action not implemented.');

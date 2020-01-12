@@ -9,6 +9,8 @@ use App\Exceptions\{Api\NotFoundException, Api\UnauthorizedException, Api\Unproc
 use App\Enums\QuestionTypeEnum;
 use App\Models\{Answer, Form, Question, User};
 use App\Repositories\V1\Contracts\AbstractFormRepository;
+use App\Service\Webhooks\Scopes\Forms\FormActionEnum;
+use App\Service\Webhooks\Scopes\Forms\WebHookFormFactory;
 use Carbon\Carbon;
 use Illuminate\Support\{Collection, Facades\DB, Facades\Log};
 
@@ -91,6 +93,10 @@ class FormRepository extends AbstractFormRepository
             'form_id' => $formCreated->id,
             'form_data' => $formEntity
         ]);
+
+        $webHookFormFactory = new WebHookFormFactory(FormActionEnum::CREATE_FORM());
+        $webHook = $webHookFormFactory->make($formCreated->id);
+        $webHook->register();
 
         return $formCreated;
     }
