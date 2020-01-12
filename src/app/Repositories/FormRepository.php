@@ -178,8 +178,8 @@ class FormRepository extends AbstractFormRepository
         }
 
         foreach ($form->questions as $question) {
-            if ($question->usersAnswers->count() > 0) {
-                throw new UnauthorizedException("It's not possible delete a form with answers.");
+            if (sizeof($question->usersAnswers) > 0) {
+                throw new UnauthorizedException(__('api.error_delete_form_answered'));
             }
         }
 
