@@ -1,21 +1,15 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\V1;
 
 
 use App\Entities\FormEntity;
-use App\Exceptions\Api\NotFoundException;
-use App\Exceptions\Api\UnauthorizedException;
-use App\Exceptions\Api\UnprocessableEntityException;
-use App\Models\Form;
-use App\Models\Question;
-use App\Models\User;
-use App\Repositories\Contracts\AbstractFormRepository;
+use App\Exceptions\{Api\NotFoundException, Api\UnauthorizedException, Api\UnprocessableEntityException};
+use App\Models\{Form, Question, User};
+use App\Repositories\V1\Contracts\AbstractFormRepository;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\{Collection, Facades\DB, Facades\Log};
 
 /**
  * Class FormRepository

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Auth;
+namespace App\Http\Controllers\V1\Admin\Auth;
 
 use App\Exceptions\InvalidUserLogin;
 
-class LoginController extends \App\Http\Controllers\Web\Auth\LoginController
+class LoginController extends \App\Http\Controllers\V1\Web\Auth\LoginController
 {
     public function rightContext($user)
     {

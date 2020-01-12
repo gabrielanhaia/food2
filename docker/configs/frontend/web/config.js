@@ -25,7 +25,7 @@ config = {
     //Backend definitions
     backend: null, //Please, just change it if mocking tests
     backendHost: RemoveLastDirectoryPartOf(document.getElementsByTagName('base')[0].href), //This you can change
-    backendPath: 'api/web', //This you can change
+    backendPath: 'api/v1/web', //This you can change
     backendApi: "swagger.yml", //used to create the mock server and the client
     baseUrl: document.getElementsByTagName('base')[0].href,
 

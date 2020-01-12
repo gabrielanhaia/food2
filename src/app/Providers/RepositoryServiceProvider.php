@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Repositories\Contracts\AbstractFormRepository;
-use App\Repositories\FormRepository;
+use App\Repositories\{V1\Contracts\AbstractFormRepository, V1\FormRepository};
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider

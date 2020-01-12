@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Repositories\Contracts;
+namespace App\Repositories\V1\Contracts;
 
 use App\Entities\FormEntity;
 use App\Models\Form;

@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\V1\Admin;
 
 use App\Entities\FormEntity;
 use App\Entities\QuestionEntity;
 use App\Enums\HttpStatusCodeEnum;
 use App\Enums\QuestionTypeEnum;
-use App\Http\Requests\CreateFormRequest;
-use App\Http\Requests\UpdateFormRequest;
-use App\Http\Resources\Form;
-use App\Http\Resources\FormCollection;
-use App\Repositories\Contracts\AbstractFormRepository;
+use App\Http\Requests\{V1\CreateFormRequest, V1\UpdateFormRequest};
+use App\Http\Resources\{V1\Form, V1\FormCollection};
+use App\Repositories\V1\Contracts\AbstractFormRepository;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
