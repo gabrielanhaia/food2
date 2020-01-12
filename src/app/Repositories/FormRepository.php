@@ -109,7 +109,7 @@ class FormRepository extends AbstractFormRepository
         $user = User::find($formEntity->getUserId());
 
         if (empty($user)) {
-            throw new UnprocessableEntityException('User not found.');
+            throw new UnprocessableEntityException(__('api.error_update_form_user_not_found'));
         }
 
         $startPublishDate = $formEntity->getStartPublish();
@@ -117,18 +117,18 @@ class FormRepository extends AbstractFormRepository
 
         if (!empty($startPublishDate)) {
             if ($startPublishDate->lessThan(Carbon::today())) {
-                throw new UnprocessableEntityException('The start publish date must be greather or equeals than today.');
+                throw new UnprocessableEntityException(__('api.error_update_form_start_date_lower_today'));
             }
         }
 
         if (!empty($endPublishDate)) {
             if ($endPublishDate->lessThan(Carbon::today())) {
-                throw new UnprocessableEntityException('The end publish date must be greather or equeals than today.');
+                throw new UnprocessableEntityException(__('api.error_update_form_end_date_lower_today'));
             }
 
             if (!empty($startPublishDate)
                 && $endPublishDate->lessThan($startPublishDate)) {
-                throw new UnprocessableEntityException('The end publish date can\'t be before publish start date.');
+                throw new UnprocessableEntityException(__('api.error_update_form_end_date_lower_start_date'));
             }
         }
 
