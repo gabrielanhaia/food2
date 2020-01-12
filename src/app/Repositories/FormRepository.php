@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Entities\FormEntity;
 use App\Exceptions\Api\NotFoundException;
+use App\Exceptions\Api\UnauthorizedException;
 use App\Exceptions\Api\UnprocessableEntityException;
 use App\Models\Form;
 use App\Models\Question;
@@ -89,6 +90,7 @@ class FormRepository extends AbstractFormRepository
      * @return mixed
      * @throws UnprocessableEntityException
      * @throws NotFoundException
+     * @throws UnauthorizedException
      */
     public function updateForm(int $formId, FormEntity $formEntity): Form
     {
@@ -96,6 +98,12 @@ class FormRepository extends AbstractFormRepository
 
         if (empty($form)) {
             throw new NotFoundException('Form not found.');
+        }
+
+        foreach ($form->questions as $question) {
+           if ($question->usersAnswers->count() > 0) {
+               throw new UnauthorizedException("It's not possible update a form with answers.");
+           }
         }
 
         $user = User::find($formEntity->getUserId());
@@ -159,6 +167,7 @@ class FormRepository extends AbstractFormRepository
      * @param int $idForm Form Identifier
      * @return mixed
      * @throws NotFoundException
+     * @throws UnauthorizedException
      */
     public function deleteForm(int $idForm)
     {
@@ -167,6 +176,13 @@ class FormRepository extends AbstractFormRepository
         if (empty($form)) {
             throw new NotFoundException('Form not found.');
         }
+
+        foreach ($form->questions as $question) {
+            if ($question->usersAnswers->count() > 0) {
+                throw new UnauthorizedException("It's not possible delete a form with answers.");
+            }
+        }
+
 
         $form->questions()->delete();
         $form->delete();
