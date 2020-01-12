@@ -2,9 +2,16 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Api\ApiException;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+/**
+ * Class Handler
+ * @package App\Exceptions
+ *
+ * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
+ */
 class Handler extends ExceptionHandler
 {
     /**
@@ -29,8 +36,9 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -46,6 +54,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ApiException) {
+            return response()->json([
+                'success' => false,
+                'message' => $exception->getMessage()
+            ], $exception->getHttpStatusCode()->value());
+        }
+
         return parent::render($request, $exception);
     }
 }

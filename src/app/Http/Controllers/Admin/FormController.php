@@ -14,6 +14,12 @@ use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class FormController
+ * @package App\Http\Controllers\Admin
+ *
+ * @author Gabriel Anhaia <anhaia.gabriel@gmail.com>
+ */
 class FormController extends Controller
 {
     /**
