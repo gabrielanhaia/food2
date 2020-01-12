@@ -13,6 +13,7 @@ use App\Repositories\FormRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 
 /**
@@ -178,6 +179,8 @@ class FormRepositoryTest extends TestCase
 
         $formRepository = new FormRepository;
         $formRepository->setFormModel($formModelMock);
+
+        Log::shouldReceive('info');
 
         $formRepository->deleteForm($formId);
     }
@@ -369,12 +372,19 @@ class FormRepositoryTest extends TestCase
         $formModelMock->shouldReceive('saveMany')
             ->once();
 
+        $formModelMock->shouldReceive('getAttribute')
+            ->with('id')
+            ->once();
+
         DB::shouldReceive('commit')
             ->once();
 
         $formRepository = new FormRepository;
         $formRepository->setUserModel($userModelMock)
             ->setFormModel($formModelMock);
+
+        Log::shouldReceive('info')
+            ->once();
 
         $result = $formRepository->createForm($formEntity);
 

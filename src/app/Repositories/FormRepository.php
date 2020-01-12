@@ -15,6 +15,7 @@ use App\Repositories\Contracts\AbstractFormRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class FormRepository
@@ -78,6 +79,11 @@ class FormRepository extends AbstractFormRepository
 
         $formCreated->questions()->saveMany($questionList);
         DB::commit();
+
+        Log::info('form_created', [
+            'form_id' => $formCreated->id,
+            'form_data' => $formEntity
+        ]);
 
         return $formCreated;
     }
@@ -158,6 +164,11 @@ class FormRepository extends AbstractFormRepository
 
         $form->refresh();
 
+        Log::info('form_updated', [
+            'form_id' => $form->id,
+            'form_data' => $formEntity
+        ]);
+
         return $form;
     }
 
@@ -182,6 +193,10 @@ class FormRepository extends AbstractFormRepository
                 throw new UnauthorizedException(__('api.error_delete_form_answered'));
             }
         }
+
+        Log::info('form_deleted', [
+            'form_id' => $idForm
+        ]);
 
         $form->questions()->delete();
         $form->delete();
